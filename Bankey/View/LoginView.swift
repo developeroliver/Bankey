@@ -32,7 +32,7 @@ class LoginView: UIView {
         
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis     = .vertical
-        stackView.spacing  = 8
+        stackView.spacing  = 10
         
         layer.cornerRadius  = 5
         clipsToBounds       = true
@@ -51,6 +51,7 @@ class LoginView: UIView {
     
     
     func layout() {
+        // addSubview
         addSubview(stackView)
         stackView.addArrangedSubview(usernameTextfield)
         stackView.addArrangedSubview(divider)
