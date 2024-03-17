@@ -12,6 +12,14 @@ class LoginVC: UIViewController {
     let loginView           = LoginView()
     let signInButton        = UIButton(type: .system)
     let errorMessageLabel   = UILabel()
+    
+    var username: String? {
+        return loginView.usernameTextfield.text
+    }
+    
+    var password: String? {
+        return loginView.passwordTextfield.text
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,7 +43,7 @@ class LoginVC: UIViewController {
         errorMessageLabel.textColor     = .systemPink
         errorMessageLabel.numberOfLines = 0
         errorMessageLabel.text          = "Error failure"
-        errorMessageLabel.isHidden      = false
+        errorMessageLabel.isHidden      = true
         
     }
 
@@ -75,6 +83,31 @@ class LoginVC: UIViewController {
 extension LoginVC {
     
     @objc func signInTapped() {
-        print("SIGN IN TAPPED")
+        errorMessageLabel.isHidden = true
+        login()
+    }
+    
+    
+    private func login() {
+        guard let username = username, let password = password else {
+            assertionFailure("Utilisateur / Mot de passe ne doit jamais être vide 😉.")
+            return
+        }
+        
+        if username.isEmpty || password.isEmpty {
+            configureView(withMessage: "Le nom de l'utilisateur ne peut être vide 😉.")
+        }
+        
+        if username == "Emilie" && password == "azerty" {
+            signInButton.configuration?.showsActivityIndicator = true
+        } else {
+            configureView(withMessage: "Nom d'utilisateur / Mot de passe incorrect")
+        }
+    }
+    
+    
+    private func configureView(withMessage message: String) {
+        errorMessageLabel.isHidden  = false
+        errorMessageLabel.text      = message
     }
 }

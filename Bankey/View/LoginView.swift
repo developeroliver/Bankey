@@ -38,14 +38,14 @@ class LoginView: UIView {
         clipsToBounds       = true
         
         usernameTextfield.translatesAutoresizingMaskIntoConstraints = false
-        usernameTextfield.placeholder    = "Username"
+        usernameTextfield.placeholder    = "Nom d'utilisateur"
         usernameTextfield.delegate       = self
         
         divider.translatesAutoresizingMaskIntoConstraints = false
         divider.backgroundColor = .secondarySystemFill
         
         passwordTextfield.translatesAutoresizingMaskIntoConstraints = false
-        passwordTextfield.placeholder    = "Password"
+        passwordTextfield.placeholder    = "Mot de passe"
         passwordTextfield.delegate       = self
     }
     
@@ -79,11 +79,7 @@ extension LoginView: UITextFieldDelegate {
     
     
     func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
-        if textField.text != "" && passwordTextfield.text != "" {
-            return true
-        } else {
-            return false
-        }
+        return true
     }
     
     
