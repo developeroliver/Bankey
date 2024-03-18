@@ -10,6 +10,7 @@ import UIKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
+    
     let loginVC         = LoginVC()
     let onboardingVC    = OnboardingContainerViewController()
     let homeVC          = HomeVC()
@@ -34,12 +35,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 // MARK: - LoginVCDelegate
 extension SceneDelegate: LoginVCDelegate {
     func didLogin() {
-        setRootViewController(onboardingVC)
+        if LocaleState.hasOnboarded {
+            setRootViewController(homeVC)
+        } else {
+            setRootViewController(onboardingVC)
+        }
     }
 }
 
 extension SceneDelegate: OnboardingContainerViewControllerDelegate {
     func didFinishOnboarding() {
+        LocaleState.hasOnboarded = true
         setRootViewController(homeVC)
     }
 }
