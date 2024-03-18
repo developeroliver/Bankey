@@ -7,6 +7,14 @@
 
 import UIKit
 
+protocol LoginVCDelegate: AnyObject {
+    func didLogin()
+}
+
+protocol LogoutDelegate: AnyObject {
+    func didLogout()
+}
+
 class LoginVC: UIViewController {
     
     let titleLabel = UILabel()
@@ -14,6 +22,8 @@ class LoginVC: UIViewController {
     let loginView           = LoginView()
     let signInButton        = UIButton(type: .system)
     let errorMessageLabel   = UILabel()
+    
+    weak var delegate: LoginVCDelegate?
     
     var username: String? {
         return loginView.usernameTextfield.text
@@ -28,6 +38,12 @@ class LoginVC: UIViewController {
         view.backgroundColor = .systemBackground
         style()
         layout()
+    }
+    
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        signInButton.configuration?.showsActivityIndicator = false
     }
     
     
@@ -109,7 +125,7 @@ class LoginVC: UIViewController {
 }
 
 
-// MARK - Actions Button
+// MARK: - Actions Button
 extension LoginVC {
     
     @objc func signInTapped() {
@@ -124,12 +140,13 @@ extension LoginVC {
             return
         }
         
-        if username.isEmpty || password.isEmpty {
-            configureView(withMessage: "Le nom de l'utilisateur ne peut être vide 😉.")
-        }
+//        if username.isEmpty || password.isEmpty {
+//            configureView(withMessage: "Le nom de l'utilisateur ne peut être vide 😉.")
+//        }
         
-        if username == "Emilie" && password == "azerty" {
+        if username == "" && password == "" {
             signInButton.configuration?.showsActivityIndicator = true
+            delegate?.didLogin()
         } else {
             configureView(withMessage: "Nom d'utilisateur / Mot de passe incorrect")
         }

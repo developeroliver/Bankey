@@ -9,9 +9,9 @@ import UIKit
 
 class OnboardingVC: UIViewController {
     
-    let stackView   = UIStackView()
-    let imageView   = UIImageView()
-    let label       = UILabel()
+    let stackView       = UIStackView()
+    let imageView       = UIImageView()
+    let label           = UILabel()
     
     let heroImageName: String
     let titleText: String
@@ -51,16 +51,13 @@ class OnboardingVC: UIViewController {
         label.font                              = UIFont.preferredFont(forTextStyle: .title3)
         label.adjustsFontForContentSizeCategory = true
         label.numberOfLines                     = 0
-        label.text                              = titleText
-        
-    }
+        label.text                              = titleText    }
     
     
     private func layout() {
         stackView.addArrangedSubview(imageView)
         stackView.addArrangedSubview(label)
         view.addSubview(stackView)
-        
         
         NSLayoutConstraint.activate([
             stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -71,3 +68,4 @@ class OnboardingVC: UIViewController {
     }
 
 }
+

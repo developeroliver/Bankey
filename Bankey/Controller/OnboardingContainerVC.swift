@@ -7,26 +7,35 @@
 
 import UIKit
 
+protocol OnboardingContainerViewControllerDelegate: AnyObject {
+    func didFinishOnboarding()
+}
+
 class OnboardingContainerViewController: UIViewController {
     
     var pageViewController: UIPageViewController!
     var pages = [UIViewController]()
     
+    let closeButton     = UIButton(type: .system)
+    
+    weak var delegate: (OnboardingContainerViewControllerDelegate)?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-        createPageViewController()
+        style()
+        layout()
         setupPageControl()
     }
     
-    func createPageViewController() {
+    func style() {
         let pageController = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
         pageController.dataSource = self
         pageController.delegate = self
         
         let page1 = OnboardingVC(heroImageName: "delorean", titleText: "Bankey est plus rapide, plus facile à utiliser et a une toute nouvelle apparence qui vous donnera l'impression d'être revenu en 1989.")
         let page2 = OnboardingVC(heroImageName: "world", titleText: "Déplacez votre argent dans le monde entier rapidement et en toute sécurité.")
-        let page3 = OnboardingVC(heroImageName: "thumb", titleText: "Pour en savoir plus, consultez le site www.bankey.com.")
+        let page3 = OnboardingVC(heroImageName: "thumbs", titleText: "Pour en savoir plus, consultez le site www.bankey.com.")
         
         pages.append(page1)
         pages.append(page2)
@@ -39,14 +48,38 @@ class OnboardingContainerViewController: UIViewController {
         addChild(pageViewController)
         view.addSubview(pageViewController.view)
         pageViewController.didMove(toParent: self)
+        
+        closeButton.translatesAutoresizingMaskIntoConstraints = false
+        closeButton.setTitle("Close", for: [])
+        closeButton.addTarget(self, action: #selector(closeTapped), for: .touchUpInside)
     }
+    
+    
+    func layout() {
+        view.addSubview(closeButton)
+        
+        NSLayoutConstraint.activate([
+            closeButton.topAnchor.constraint(equalToSystemSpacingBelow: view.safeAreaLayoutGuide.topAnchor, multiplier: 2),
+            closeButton.leadingAnchor.constraint(equalToSystemSpacingAfter: view.leadingAnchor, multiplier: 2),
+        ])
+    }
+}
+
+// MARK: - Actions Button
+extension OnboardingContainerViewController {
     
     func setupPageControl() {
         let appearance = UIPageControl.appearance(whenContainedInInstancesOf: [UIPageViewController.self])
         appearance.pageIndicatorTintColor = .secondarySystemBackground
         appearance.currentPageIndicatorTintColor = .systemBlue
     }
+
+    
+    @objc func closeTapped() {
+        delegate?.didFinishOnboarding()
+    }
 }
+
 
 // MARK: - UIPageViewControllerDataSource
 extension OnboardingContainerViewController: UIPageViewControllerDataSource, UIPageViewControllerDelegate {
@@ -59,6 +92,7 @@ extension OnboardingContainerViewController: UIPageViewControllerDataSource, UIP
         guard previousIndex >= 0 else {
             return nil
         }
+        
         return pages[previousIndex]
     }
     
@@ -68,6 +102,7 @@ extension OnboardingContainerViewController: UIPageViewControllerDataSource, UIP
             return nil
         }
         let nextIndex = currentIndex + 1
+        
         guard nextIndex < pages.count else {
             return nil
         }
