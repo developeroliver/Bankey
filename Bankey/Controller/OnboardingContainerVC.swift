@@ -24,12 +24,9 @@ class OnboardingContainerViewController: UIViewController {
         pageController.dataSource = self
         pageController.delegate = self
         
-        let page1 = UIViewController()
-        page1.view.backgroundColor = UIColor.red
-        let page2 = UIViewController()
-        page2.view.backgroundColor = UIColor.green
-        let page3 = UIViewController()
-        page3.view.backgroundColor = UIColor.blue
+        let page1 = OnboardingVC(heroImageName: "delorean", titleText: "Bankey est plus rapide, plus facile à utiliser et a une toute nouvelle apparence qui vous donnera l'impression d'être revenu en 1989.")
+        let page2 = OnboardingVC(heroImageName: "world", titleText: "Déplacez votre argent dans le monde entier rapidement et en toute sécurité.")
+        let page3 = OnboardingVC(heroImageName: "thumb", titleText: "Pour en savoir plus, consultez le site www.bankey.com.")
         
         pages.append(page1)
         pages.append(page2)
@@ -49,9 +46,6 @@ class OnboardingContainerViewController: UIViewController {
         appearance.pageIndicatorTintColor = .secondarySystemBackground
         appearance.currentPageIndicatorTintColor = .systemBlue
     }
-    
-    
-
 }
 
 // MARK: - UIPageViewControllerDataSource
