@@ -7,89 +7,51 @@
 
 import UIKit
 
-class OnboardingContainerViewController: UIViewController {
+class OnboardingVC: UIViewController {
     
-    var pageViewController: UIPageViewController!
-    var pages = [UIViewController]()
+    let stackView   = UIStackView()
+    let imageView   = UIImageView()
+    let label       = UILabel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-        createPageViewController()
-        setupPageControl()
-    }
-    
-    func createPageViewController() {
-        let pageController = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
-        pageController.dataSource = self
-        pageController.delegate = self
-        
-        let page1 = UIViewController()
-        page1.view.backgroundColor = UIColor.red
-        let page2 = UIViewController()
-        page2.view.backgroundColor = UIColor.green
-        let page3 = UIViewController()
-        page3.view.backgroundColor = UIColor.blue
-        
-        pages.append(page1)
-        pages.append(page2)
-        pages.append(page3)
-        
-        pageController.setViewControllers([pages[0]], direction: .forward, animated: true, completion: nil)
-        
-        pageViewController = pageController
-        
-        addChild(pageViewController)
-        view.addSubview(pageViewController.view)
-        pageViewController.didMove(toParent: self)
-    }
-    
-    func setupPageControl() {
-        let appearance = UIPageControl.appearance(whenContainedInInstancesOf: [UIPageViewController.self])
-        appearance.pageIndicatorTintColor = .secondarySystemBackground
-        appearance.currentPageIndicatorTintColor = .systemBlue
+        style()
+        layout()
     }
     
     
-}
+    private func style() {
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis      = .vertical
+        stackView.spacing   = 20
+        
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.contentMode   = .scaleAspectFit
+        imageView.image         = UIImage(named: "delorean")
+        
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textAlignment                     = .center
+        label.font                              = UIFont.preferredFont(forTextStyle: .title3)
+        label.adjustsFontForContentSizeCategory = true
+        label.numberOfLines                     = 0
+        label.text                              = "Bankey est plus rapide, plus facile à utiliser et a une toute nouvelle apparence qui vous donnera l'impression d'être revenu en 1989."
+        
+    }
+    
+    
+    private func layout() {
+        stackView.addArrangedSubview(imageView)
+        stackView.addArrangedSubview(label)
+        view.addSubview(stackView)
+        
+        
+        NSLayoutConstraint.activate([
+            stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            stackView.leadingAnchor.constraint(equalToSystemSpacingAfter: view.leadingAnchor, multiplier: 2),
+            view.trailingAnchor.constraint(equalToSystemSpacingAfter: stackView.trailingAnchor, multiplier: 2),
+        ])
+    }
 
-// MARK: - UIPageViewControllerDataSource
-extension OnboardingContainerViewController: UIPageViewControllerDataSource, UIPageViewControllerDelegate {
-    
-    func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
-        guard let currentIndex = pages.firstIndex(of: viewController) else {
-            return nil
-        }
-        let previousIndex = currentIndex - 1
-        guard previousIndex >= 0 else {
-            return nil
-        }
-        return pages[previousIndex]
-    }
-    
-    
-    func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
-        guard let currentIndex = pages.firstIndex(of: viewController) else {
-            return nil
-        }
-        let nextIndex = currentIndex + 1
-        guard nextIndex < pages.count else {
-            return nil
-        }
-        return pages[nextIndex]
-    }
-    
-    
-    func presentationCount(for pageViewController: UIPageViewController) -> Int {
-        return pages.count
-    }
-    
-    
-    func presentationIndex(for pageViewController: UIPageViewController) -> Int {
-        guard let firstViewController = pageViewController.viewControllers?.first,
-              let firstViewControllerIndex = pages.firstIndex(of: firstViewController) else {
-            return 0
-        }
-        return firstViewControllerIndex
-    }
 }
