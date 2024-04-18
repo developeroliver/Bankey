@@ -20,18 +20,12 @@ class LoginVC: UIViewController {
         return loginView.passwordTextField.text
     }
     // MARK: - UI Declarations
-    let textLabel: UILabel = {
-        let label = UILabel()
-        label.text = "label"
-        return label
-    }()
-    
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
         label.font = UIFont.preferredFont(forTextStyle: .largeTitle)
         label.adjustsFontForContentSizeCategory = true
-        label.text = "Bankey"
+        label.text = ""
         return label
     }()
     private let subtitleLabel: UILabel = {
@@ -66,6 +60,12 @@ class LoginVC: UIViewController {
         super.viewDidLoad()
         setup()
         layout()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        titleAnimation()
+        if UserDefaults.standard.bool(forKey: "hasViewedWalkthrough") { return }
     }
 }
 
@@ -102,6 +102,15 @@ extension LoginVC {
     private func configureView(withMessage message: String) {
         errorMessageLabel.isHidden = false
         errorMessageLabel.text = message
+    }
+    
+    private func titleAnimation() {
+        titleLabel.frame = CGRect(x: 0, y: -titleLabel.frame.size.height, width: view.frame.size.width, height: titleLabel.frame.size.height)
+        titleLabel.text = "Bankey"
+        
+        UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseInOut, animations: {
+            self.titleLabel.frame = CGRect(x: 0, y: 100, width: self.titleLabel.frame.size.width, height: self.titleLabel.frame.size.height)
+        }, completion: nil)
     }
 }
 

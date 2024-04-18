@@ -8,18 +8,29 @@
 import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
-
+    
     var window: UIWindow?
-
-
+    
+    
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
         window = UIWindow(windowScene: windowScene)
-        window?.rootViewController = LoginVC()
+        
+        let walkthroughController = WalkthroughVC()
+        let navigationController = UINavigationController(rootViewController: walkthroughController)
+        
+        if !UserDefaults.standard.bool(forKey: "hasViewedWalkthrough") {
+            window?.rootViewController = navigationController
+        } else {
+            let loginController = LoginVC()
+            window?.rootViewController = UINavigationController(rootViewController: loginController)
+        }
+        
+        
         window?.makeKeyAndVisible()
     }
-
+    
 }
 
