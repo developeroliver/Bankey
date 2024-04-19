@@ -8,17 +8,14 @@
 import UIKit
 import SnapKit
 
-class WalkthroughVC: UIViewController {
+class WalkthroughVC: UIPageViewController {
     
     // MARK: - Properties
     var currentIndex = 0
-    var pageHeadings = ["CRÉER VOTRE PROPRE GUIDE DE SPOTS", "MONTRER VOTRE EMPLACEMENT", "DÉCOUVRIR UN NOUVEAU LIEU OU UN BON COIN POUR MANGER"]
+    var pageHeadings = ["Bankey est plus rapide, plus facile à utiliser et a une toute nouvelle apparence qui vous donnera l'impression d'être revenu dans les années 80.", "Déplacez votre argent dans le monde entier rapidement et en toute sécurité.", "Pour en savoir plus, consultez le site www.bankey.com."]
     var pageImages = ["delorean", "thumbs", "world"]
-    var pageSubHeadings = ["Marquez vos meilleurs endroits et restaurants pour créer votre propre guide",
-                           "Recherchez et localisez vos spots préférés sur Maps",
-                           "Trouvez des endroits et partagez-les avec vos amis"]
     
-    // MARK: - UI DECLARATIONS
+    // MARK: - UI Declarations
     private let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
@@ -30,15 +27,6 @@ class WalkthroughVC: UIViewController {
         label.textColor = .label
         label.textAlignment = .center
         label.font = UIFont.preferredFont(forTextStyle: .headline)
-        label.numberOfLines = 0
-        return label
-    }()
-    
-    private let subtitleLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = .secondaryLabel
-        label.textAlignment = .center
-        label.font = UIFont.preferredFont(forTextStyle: .subheadline)
         label.numberOfLines = 0
         return label
     }()
@@ -111,7 +99,6 @@ extension WalkthroughVC {
     private func updateUI() {
         imageView.image = UIImage(named: pageImages[currentIndex])
         titleLabel.text = pageHeadings[currentIndex]
-        subtitleLabel.text = pageSubHeadings[currentIndex]
         pageControl.currentPage = currentIndex
         previousButton.isHidden = currentIndex == 0
         nextButton.setTitle(currentIndex == 2 ? "Terminer" : "Suivant", for: .normal)
@@ -121,7 +108,6 @@ extension WalkthroughVC {
         view.backgroundColor = .systemBackground
         view.addSubview(imageView)
         view.addSubview(titleLabel)
-        view.addSubview(subtitleLabel)
         view.addSubview(pageControl)
         view.addSubview(previousButton)
         view.addSubview(nextButton)
@@ -134,7 +120,7 @@ extension WalkthroughVC {
     
     private func setupConstraints() {
         imageView.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(150)
+            make.top.equalToSuperview().offset(200)
             make.centerX.equalToSuperview()
             make.width.equalTo(220)
             make.height.equalTo(220)
@@ -145,11 +131,6 @@ extension WalkthroughVC {
             make.leading.trailing.equalToSuperview().inset(20)
         }
         
-        subtitleLabel.snp.makeConstraints { make in
-            make.top.equalTo(titleLabel.snp.bottom).offset(30)
-            make.leading.trailing.equalToSuperview().inset(30)
-        }
-  
         pageControl.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.bottom.equalTo(nextButton.snp.top).offset(-20)

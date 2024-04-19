@@ -24,8 +24,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         if !UserDefaults.standard.bool(forKey: "hasViewedWalkthrough") {
             window?.rootViewController = navigationController
         } else {
-            let loginController = LoginVC()
-            window?.rootViewController = UINavigationController(rootViewController: loginController)
+            let mainTabBarController = MainTabBarController()
+            window?.rootViewController = UINavigationController(rootViewController: mainTabBarController)
         }
         
         

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3765AEAD2BD2AA6000E9E4C2 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3765AEAC2BD2AA6000E9E4C2 /* MainTabBarController.swift */; };
 		377404252BD15BF400861342 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 377404242BD15BF400861342 /* SnapKit */; };
 		3774042D2BD15E2E00861342 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3774042C2BD15E2E00861342 /* LoginView.swift */; };
 		3774042F2BD1794F00861342 /* WalkthroughVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3774042E2BD1794F00861342 /* WalkthroughVC.swift */; };
@@ -19,6 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3765AEAC2BD2AA6000E9E4C2 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		3774042C2BD15E2E00861342 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		3774042E2BD1794F00861342 /* WalkthroughVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalkthroughVC.swift; sourceTree = "<group>"; };
 		377404302BD179CA00861342 /* HomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
@@ -60,6 +62,7 @@
 				377404302BD179CA00861342 /* HomeVC.swift */,
 				378B43592BCFFF3600AD75CE /* LoginVC.swift */,
 				3774042E2BD1794F00861342 /* WalkthroughVC.swift */,
+				3765AEAC2BD2AA6000E9E4C2 /* MainTabBarController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -202,6 +205,7 @@
 				378B435A2BCFFF3600AD75CE /* LoginVC.swift in Sources */,
 				378B43562BCFFF3600AD75CE /* AppDelegate.swift in Sources */,
 				3774042D2BD15E2E00861342 /* LoginView.swift in Sources */,
+				3765AEAD2BD2AA6000E9E4C2 /* MainTabBarController.swift in Sources */,
 				377404312BD179CA00861342 /* HomeVC.swift in Sources */,
 				378B43582BCFFF3600AD75CE /* SceneDelegate.swift in Sources */,
 				3774042F2BD1794F00861342 /* WalkthroughVC.swift in Sources */,
