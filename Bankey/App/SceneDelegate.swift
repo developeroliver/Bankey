@@ -19,13 +19,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(windowScene: windowScene)
         
         let walkthroughController = WalkthroughVC()
-        let navigationController = UINavigationController(rootViewController: walkthroughController)
         
         if !UserDefaults.standard.bool(forKey: "hasViewedWalkthrough") {
-            window?.rootViewController = navigationController
+            window?.rootViewController = walkthroughController
         } else {
             let mainTabBarController = MainTabBarController()
-            window?.rootViewController = UINavigationController(rootViewController: mainTabBarController)
+            window?.rootViewController = mainTabBarController
         }
         
         

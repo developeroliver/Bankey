@@ -27,22 +27,22 @@ class MainTabBarController: UITabBarController {
     }
     
     func createSearchNC() -> UINavigationController {
-        let SearchVC = HomeVC()
-        SearchVC.tabBarItem = UITabBarItem(title: "Rechercher", image: UIImage(systemName: "magnifyingglass"), tag: 1)
+        let SearchVC = AccountSummaryVC()
+        SearchVC.tabBarItem = UITabBarItem(title: "Summary", image: UIImage(systemName: "list.dash.header.rectangle"), tag: 1)
         
         return UINavigationController(rootViewController: SearchVC)
     }
     
     func createContactNC() -> UINavigationController {
-        let contactVC = HomeVC()
-        contactVC.tabBarItem = UITabBarItem(title: "Contacts", image: UIImage(systemName: "person.fill"), tag: 2)
+        let contactVC = MoreVC()
+        contactVC.tabBarItem = UITabBarItem(title: "Move Money", image: UIImage(systemName: "arrow.left.arrow.right"), tag: 2)
         
         return UINavigationController(rootViewController: contactVC)
     }
     
     func createFavoritesNC() -> UINavigationController {
-        let favoritesVC = HomeVC()
-        favoritesVC.tabBarItem = UITabBarItem(title: "Profil", image: UIImage(systemName: "person.fill"), tag: 3)
+        let favoritesVC = MoveMoneyVC()
+        favoritesVC.tabBarItem = UITabBarItem(title: "More", image: UIImage(systemName: "ellipsis.circle"), tag: 3)
         
         return UINavigationController(rootViewController: favoritesVC)
     }
