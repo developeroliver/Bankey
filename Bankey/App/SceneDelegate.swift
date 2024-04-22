@@ -17,6 +17,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
         window = UIWindow(windowScene: windowScene)
+        UINavigationBar.appearance().backgroundColor = .systemBlue
         
         let walkthroughController = WalkthroughVC()
         
@@ -26,6 +27,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             let mainTabBarController = MainTabBarController()
             window?.rootViewController = mainTabBarController
         }
+        
         
         
         window?.makeKeyAndVisible()

@@ -11,7 +11,6 @@ import SnapKit
 class AccountSummaryVC: UITableViewController {
     
     // MARK: - Properties
-    let reuseID = "CELL_ID"
     let games = ["Pacman", "Space Invaders", "Space Patrol"]
     
     // MARK: - LifeCycle Methods
@@ -33,8 +32,10 @@ extension AccountSummaryVC {
     
     private func setupTableView() {
         let tableView = UITableView(frame: view.bounds, style: .plain)
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: reuseID)
-        tableView.rowHeight = 50
+        tableView.register(AccountSummaryCell.self, forCellReuseIdentifier: AccountSummaryCell.reuseID)
+        tableView.rowHeight = AccountSummaryCell.rowHeight
+        tableView.backgroundColor = .systemBlue
+        tableView.tableFooterView = UIView()
         self.tableView = tableView
     }
     
@@ -52,13 +53,13 @@ extension AccountSummaryVC {
 extension AccountSummaryVC {
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return games.count
+        return 20
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: reuseID, for: indexPath)
-        cell.textLabel?.text = games[indexPath.row]
-                return cell
+        let cell = tableView.dequeueReusableCell(withIdentifier: AccountSummaryCell.reuseID, for: indexPath) as! AccountSummaryCell
+        
+        return cell
     }
 }
 
