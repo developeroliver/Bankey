@@ -80,12 +80,12 @@ extension WalkthroughVC {
             currentIndex += 1
             updateUI()
         case 2:
-            print("ok")
-            let navigation = LoginVC()
-            navigationController?.pushViewController(navigation, animated: true)
-            navigationController?.setViewControllers([navigation], animated: false)
-            UserDefaults.standard.set(true, forKey: "hasViewedWalkthrough")
-            UserDefaults.standard.synchronize()
+            let navigation = MainTabBarController()
+            let navigationController = UINavigationController(rootViewController: navigation)
+                    navigationController.modalPresentationStyle = .fullScreen
+                    self.present(navigationController, animated: true, completion: nil)
+                    UserDefaults.standard.set(true, forKey: "hasViewedWalkthrough")
+                    UserDefaults.standard.synchronize()
             
         default:
             break

@@ -31,6 +31,7 @@ class LoginView: UIView {
         let tf = UITextField()
         tf.placeholder = "Entrer votre mot de passe"
         tf.isSecureTextEntry = true
+        tf.enablePasswordToggle()
         return tf
     }()
     

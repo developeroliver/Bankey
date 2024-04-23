@@ -13,6 +13,7 @@ class MainTabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         UITabBar.appearance().tintColor = .systemBlue
+        tabBar.isTranslucent = true
         viewControllers = [ createSearchNC(), createContactNC(), createFavoritesNC()]
     }
     
