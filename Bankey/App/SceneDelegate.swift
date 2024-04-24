@@ -18,16 +18,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         window = UIWindow(windowScene: windowScene)
         
-//        window?.backgroundColor = .systemBlue
-//        UINavigationBar.appearance().backgroundColor = .systemBlue
-        
         let walkthroughController = WalkthroughVC()
         
-        if !UserDefaults.standard.bool(forKey: "hasViewedWalkthrough") {
-            window?.rootViewController = walkthroughController
-        } else {
+        
+        if UserDefaults.standard.bool(forKey: "hasViewedWalkthrough") {
             let mainTabBarController = MainTabBarController()
             window?.rootViewController = mainTabBarController
+        } else {
+            window?.rootViewController = walkthroughController
         }
         
         registerForNotifications()
@@ -40,15 +38,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     @objc private func didLogout() {
-           let loginVC = LoginVC()
-           let navigationController = UINavigationController(rootViewController: loginVC)
-           window?.rootViewController = navigationController
-           
-           // Supprimer les données d'authentification enregistrées
-           UserDefaults.standard.removeObject(forKey: "hasViewedWalkthrough")
-           UserDefaults.standard.synchronize()
-       }
-
+        let loginVC = LoginVC()
+        let navigationController = UINavigationController(rootViewController: loginVC)
+        window?.rootViewController = navigationController
+        
+        // Supprimer les données d'authentification enregistrées
+        UserDefaults.standard.removeObject(forKey: "hasViewedWalkthrough")
+        UserDefaults.standard.synchronize()
+    }
+    
 }
 
 

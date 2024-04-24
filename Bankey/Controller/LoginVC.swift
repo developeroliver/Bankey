@@ -62,10 +62,17 @@ class LoginVC: UIViewController {
         layout()
     }
     
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         titleAnimation()
+        
         if UserDefaults.standard.bool(forKey: "hasViewedWalkthrough") { return }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        titleLabel.center.x -= view.bounds.width
     }
 }
 
@@ -92,8 +99,12 @@ extension LoginVC {
             return
         }
         
-        if username == "" && password == "" {
+        if username == "Olive" && password == "azerty" {
             signInButton.configuration?.showsActivityIndicator = true
+            UserDefaults.standard.set(username, forKey: "username")
+            let navigation = AccountSummaryVC()
+            navigation.profile = AccountSummaryVC.Profile(firstname: username, lastname: "")
+            navigationController?.pushViewController(navigation, animated: true)
         } else {
             configureView(withMessage: "Utilisateur / mot de passe incorrect")
         }
@@ -102,15 +113,25 @@ extension LoginVC {
     private func configureView(withMessage message: String) {
         errorMessageLabel.isHidden = false
         errorMessageLabel.text = message
+        shakeButton()
+    }
+    
+    private func shakeButton() {
+        let animation = CAKeyframeAnimation()
+        animation.keyPath = "position.x"
+        animation.values = [0, 10, -10, 10, 0]
+        animation.keyTimes = [0, 0.16, 0.5, 0.83, 1]
+        animation.duration = 0.4
+        
+        animation.isAdditive = true
+        signInButton.layer.add(animation, forKey: "shake")
     }
     
     private func titleAnimation() {
-        titleLabel.frame = CGRect(x: 0, y: -titleLabel.frame.size.height, width: view.frame.size.width, height: titleLabel.frame.size.height)
-        titleLabel.text = "Bankey"
-        
-        UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseInOut, animations: {
-            self.titleLabel.frame = CGRect(x: 0, y: 100, width: self.titleLabel.frame.size.width, height: self.titleLabel.frame.size.height)
-        }, completion: nil)
+        UIView.animate(withDuration: 0.5, delay: 0, options: [.curveEaseInOut]) { [self] in
+            titleLabel.center.x += view.bounds.width
+            titleLabel.text = "Bankey"
+        }
     }
 }
 

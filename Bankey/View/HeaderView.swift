@@ -10,13 +10,23 @@ import SnapKit
 
 class HeaderView: UIView {
     
+    struct ViewModel {
+        let welcomeMessage: String
+        let name: String
+        let date: Date
+        
+        var dateFormatted: String {
+            return date.dayMonthYearString
+        }
+    }
+    
     // MARK: - UI Declaration
     private let contentView: UIView = {
         let view = UIView()
         return view
     }()
     
-    private let titleLabel: UILabel = {
+    lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.text = "Bankey"
         label.textColor = .white
@@ -24,21 +34,21 @@ class HeaderView: UIView {
         return label
     }()
     
-    private let subtitleLabel: UILabel = {
+    lazy var subtitleLabel: UILabel = {
         let label = UILabel()
         label.text = "Good Morning"
         label.textColor = .white
         return label
     }()
     
-    private let nameLabel: UILabel = {
+    lazy var nameLabel: UILabel = {
         let label = UILabel()
-        label.text = "Oliver"
+        label.text = "Olive"
         label.textColor = .white
         return label
     }()
     
-    private let dateLabel: UILabel = {
+    lazy var dateLabel: UILabel = {
         let label = UILabel()
         label.text = "19 Avril 2024"
         label.textColor = .white
@@ -46,7 +56,7 @@ class HeaderView: UIView {
         return label
     }()
     
-    private let imageView: UIImageView = {
+    lazy var imageView: UIImageView = {
        let iv = UIImageView()
         iv.image = UIImage(systemName: "sun.max.fill")
         iv.tintColor = .systemYellow
@@ -85,13 +95,18 @@ class HeaderView: UIView {
     }
 }
 
-
+// MARK: - Helpers
 extension HeaderView {
+    
+    func configure(viewModel: ViewModel) {
+        subtitleLabel.text = viewModel.welcomeMessage
+        nameLabel.text = viewModel.name
+        dateLabel.text = viewModel.dateFormatted
+    }
     
     private func style() {
         backgroundColor = .systemBlue
     }
-    
     
     private func layout() {
         addSubview(contentView)

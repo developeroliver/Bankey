@@ -12,28 +12,34 @@ class AccountSummaryVC: UITableViewController {
     
     // MARK: - Properties
     struct Profile {
-        let firstname: String
+        var firstname: String
         let lastname: String
     }
     
-    var profile: Profile?
+    var profile: Profile!
     var accounts: [AccountSummaryCell.ViewModel] = []
     
     // MARK: - UI
     private lazy var logoutBarButtonItem: UIBarButtonItem = {
         let barButtonItem = UIBarButtonItem(image: UIImage(systemName: "rectangle.portrait.and.arrow.right"), style: .plain, target: self, action: #selector(logoutTapped))
-        barButtonItem.tintColor = .label
+        barButtonItem.tintColor = .white
         return barButtonItem
     }()
     
     // MARK: - LifeCycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+        if let savedUsername = UserDefaults.standard.string(forKey: "username") {
+                profile = AccountSummaryVC.Profile(firstname: savedUsername, lastname: "")
+            }
         style()
         setupTableView()
         setupTableHeaderView()
         fetchData()
         setupNavigationBar()
+        
     }
 }
 
@@ -47,6 +53,10 @@ extension AccountSummaryVC {
 
 // MARK: - Helpers
 extension AccountSummaryVC {
+    
+    func configure(username: String) {
+        profile?.firstname = username
+    }
     
     private func style() {
         view.backgroundColor = .systemBackground
@@ -72,6 +82,12 @@ extension AccountSummaryVC {
         size.width = UIScreen.main.bounds.width
         header.frame.size = size
         self.tableView.tableHeaderView = header
+        if let firstname = profile?.firstname {
+            header.configure(viewModel: HeaderView.ViewModel(welcomeMessage: "Bonjour", name: firstname, date: Date.now))
+        } else {
+            // Gérer le cas où profile est nul
+            header.configure(viewModel: HeaderView.ViewModel(welcomeMessage: "Bonjour", name: "Utilisateur", date: Date.now))
+        }
     }
 }
 
@@ -120,5 +136,20 @@ extension AccountSummaryVC {
         accounts.append(masterCard)
         accounts.append(investment1)
         accounts.append(investment2)
+    }
+}
+
+
+extension AccountSummaryVC: UIPickerViewDataSource, UIPickerViewDelegate {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return 3
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return ["CB", "Factures", "Courses"][row] // Remplacer les options par les vôtres
     }
 }
